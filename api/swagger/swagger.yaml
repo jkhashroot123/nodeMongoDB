@@ -1,0 +1,1142 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Hello World App
+# during dev, should point to your local machine
+host: localhost:9000
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+
+securityDefinitions:
+    Bearer:
+        type: apiKey
+        name: Authorization
+        in: header
+paths:
+  /userreg:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: user
+    post:
+      description: Returns 'Signup' to the caller
+      # used as the method name of the controller
+      operationId: userreg
+      parameters:
+        - name: "body"
+          in: "body"
+          description: The email of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/signup" 
+          
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /userlogin:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: user
+    post:
+      description: Returns 'Login' to the caller
+      # used as the method name of the controller
+      operationId: userlogin
+      parameters:
+        - name: "body"
+          in: "body"
+          description: The email of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/login" 
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+
+  /change-password:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: change_password
+    post:
+      description: Returns 'Change Password' to the caller
+      # used as the method name of the controller
+      operationId: changePassword
+      security:
+        - Bearer: []
+      parameters:
+        - name: "changePassword"
+          in: "body"
+          description: The changePassword of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/changePassword" 
+          
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+
+  /get-my-profile:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: user
+    get:
+      description: Returns 'get_task' to the caller
+      # used as the method name of the controller
+      operationId: get_my_profile
+      security:
+        - Bearer: []
+      parameters:
+        - name: userid
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse" 
+            
+  /update-profile:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: user
+    put:
+      description: Returns 'Timesheet' to the caller
+      # used as the method name of the controller
+      operationId: updateprofile
+      security:
+        - Bearer: []
+      parameters:
+        - name: "body"
+          in: "body"
+          description: The email of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/update-profile"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+ 
+  /get-project-data:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: dropdown_controller
+    get:
+      description: Returns 'dropdown_controller' to the caller
+      # used as the method name of the controller
+      operationId: getProjectData
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /taskview:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: dropdown_controller
+    get:
+      description: Returns 'get_task' to the caller
+      # used as the method name of the controller
+      operationId: getTaskData
+      security:
+        - Bearer: []
+      parameters:
+        - name: projectid
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse" 
+  
+  /savetimesheet:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    post:
+      description: Returns 'Timesheet' to the caller
+      # used as the method name of the controller
+      operationId: saveTimesheet
+      security:
+        - Bearer: []
+      parameters:
+        - name: "body"
+          in: "body"
+          description: The email of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/savetimesheet" 
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+           
+  /saveProjects:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: project_add
+    post:
+      description: Returns 'project_add' to the caller
+      # used as the method name of the controller
+      operationId: projectadd
+      security:
+        - Bearer: []
+      parameters:
+        - name: "body"
+          in: "body"
+          description: The email of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/projectadds" 
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+  
+  /saveTasks:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: task_add
+    post:
+      description: Returns 'task_add' to the caller
+      # used as the method name of the controller
+      operationId: saveTasks
+      security:
+        - Bearer: []
+      parameters:
+        - name: "body"
+          in: "body"
+          description: The email of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/taskadds" 
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+ 
+  /FetchAllTasks:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: task_add
+    get:
+      description: Returns 'FetchAllTasks' to the caller
+      # used as the method name of the controller
+      operationId: FetchAllTasks
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+  /FetchAllProjects:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: project_add
+    get:
+      description: Returns 'FetchAllProjects' to the caller
+      # used as the method name of the controller
+      operationId: FetchAllProjects
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /FetchFullProjectDatas:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: project_add
+    get:
+      description: Returns 'FetchFullProjectDatas' to the caller
+      # used as the method name of the controller
+      operationId: FetchFullProjectDatas
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    
+  /getTimecardData:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fetchTimeCardData
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fetchFullTaskDatas:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: task_add
+    get:
+      description: Returns 'getFullTaskDatas' to the caller
+      # used as the method name of the controller
+      operationId: getFullTaskDatas
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /getTimeTrackerDetails:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: getTimeTrackerDetails
+      security:
+        - Bearer: []
+      parameters:
+        - name: timetrackerid
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+  /deleteTimetracker:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    delete:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: deleteTimetracker
+      security:
+        - Bearer: []
+      parameters:
+        - name: timetrackerid
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+ 
+  /deleteTasklist:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: task_add
+    delete:
+      description: Returns 'tasks' to the caller
+      # used as the method name of the controller
+      operationId: deleteTasklist
+      security:
+        - Bearer: []
+      parameters:
+        - name: taskid
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /deleteProjectlist:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: project_add
+    delete:
+      description: Returns 'projects' to the caller
+      # used as the method name of the controller
+      operationId: deleteProjectlist
+      security:
+        - Bearer: []
+      parameters:
+        - name: projectid
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+  /fetchTaskByID:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: task_add
+    get:
+      description: Returns 'tasks' to the caller
+      # used as the method name of the controller
+      operationId: fetchTaskByID
+      security:
+        - Bearer: []
+      parameters:
+        - name: taskid
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fetchProjectByID:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: project_add
+    get:
+      description: Returns 'tasks' to the caller
+      # used as the method name of the controller
+      operationId: fetchProjectByID
+      security:
+        - Bearer: []
+      parameters:
+        - name: projectid
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fetchAllTaskbyname:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: task_add
+    get:
+      description: Returns 'fetchAllTaskbyname' to the caller
+      # used as the method name of the controller
+      operationId: fetchAllTaskbyname
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /updateTimesheet:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    put:
+      description: Returns 'Timesheet' to the caller
+      # used as the method name of the controller
+      operationId: updateTimecard
+      security:
+        - Bearer: []
+      parameters:
+        - name: "timesheetID"
+          in: "body"
+          description: The email of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/updateTimecard"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+ 
+  /getallusers:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: dropdown_controller
+    get:
+      description: Returns 'dropdown_controller' to the caller
+      # used as the method name of the controller
+      operationId: getallusers
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+   
+  /get-userrole-data:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: dropdown_controller
+    get:
+      description: Returns 'dropdown_controller' to the caller
+      # used as the method name of the controller
+      operationId: getUserroleData
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /getTimeTrackFull:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: getTimeTrackFull
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  /fullTimesheetProject:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: project_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheetProject
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fullTimesheetDate:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: date_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheetDate
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fullTimesheetWeekly:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: weekly_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheetWeekly
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fullTimesheet:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheet
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+       
+  /fullTimesheetAdminProject:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: project_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheetAdminProject
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fullTimesheetAdminDate:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: date_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheetAdminDate
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fullTimesheetAdminWeekly:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: weekly_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheetAdminWeekly
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /fullTimesheetAdmin:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    get:
+      description: Returns 'rpttimecard' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheetAdmin
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"   
+
+  /fetchAdminUsersById:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: save_timesheet
+    get:
+      description: Returns 'users' to the caller
+      # used as the method name of the controller
+      operationId: fullTimesheet
+      security:
+        - Bearer: []
+      parameters:
+        - name: userID
+          in: query
+          description: The email of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        "403":
+          description: "Access Denied"         
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /logout:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: user
+    post:
+      description: Returns 'Timesheet' to the caller
+      # used as the method name of the controller
+      operationId: logout
+      parameters:
+        - name: "body"
+          in: "body"
+          description: The email of the person to whom to say hello
+          required: false
+          schema:
+            $ref: "#/definitions/logout"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+ 
+
+  
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  HelloWorldResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  signup:
+    type: "object"
+    required:
+      - "userrole_id"
+      - "first_name"
+      - "last_name"
+      - "email"
+      - "password"
+    properties:
+      userrole_id:
+        type: "string"
+        example: "hiring"
+      first_name:
+        type: "string"
+        example: "first_name"
+      last_name:
+        type: "string"
+        example: "last_name"
+      email:
+        type: "string"
+        example: "email@gmail.com"
+      password:
+        type: "string"
+        example: "12345678"
+  login:
+    type: "object"
+    required:
+    - "email"
+    - "password"
+    properties:
+      email:
+        type: "string"
+        example: "email@gmail.com"
+      password:
+        type: "string"
+        example: "12345678"
+  changePassword:
+    type: "object"
+    required:
+      - "oldPassword"
+      - "newPassword"
+    properties:
+      oldPassword:
+        type: "string"
+        example: "87654321"
+      newPassword:
+        type: "string"
+        example: "12345678"
+  savetimesheet:
+    type: "object"
+    required:
+      - "project_id"
+      - "task_id"
+      - "notes"
+      - "entertime"
+    properties:
+      project_id:
+        type: "string"
+        example: "project_name"
+      task_id:
+        type: "string"
+        example: "task_name"
+      notes:
+        type: "string"
+        example: "notes"
+      entertime:
+        type: "object"
+        example: "entertime"
+  projectadds:
+    type: "object"
+    required:
+      - "project_name"
+    properties:
+      project_name:
+        type: "string"
+        example: "project_name"
+  taskadds:
+    type: "object"
+    required:
+      - "project_id"
+      - "task_name"
+    properties:
+      project_id:
+        type: "string"
+        example: "project_name"
+      task_name:
+        type: "string"
+        example: "task_name"
+  getmyprofile:
+    type: "object"
+  update-profile:
+    type: "object"
+  update_project:
+    type: "object"
+  update_task:
+    type: "object"
+  logout:
+    type: "string"
+  updateTimecard:
+    type: "object"
+  fetch-timecard:
+    type: "object"
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+
