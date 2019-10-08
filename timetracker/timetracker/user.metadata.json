@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"timetracker.user"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"timetracker.user","background":true}],"uuid":"c8b9acb1fb6c4d07b9abe1d2c1d53bbd"}
